@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
+</head>
+<body>
+
+<script>
+
+var chosenItems = {};
+
+function gotoQuantity(obj)
+{
+	$.mobile.changePage("#quantity");
+	vegetablesChosen = $(obj).text();
+	$("#vegname").text(vegetablesChosen);
+	
+}
+
+
+function showChosenItems()
+{
+	if ($("#spin").val()!="0") saveChoice();
+	$.mobile.changePage("#finalShoppingList");
+	//$("#allVegetablesChosen").text(JSON.stringify(chosenItems));
+	output = "";
+	for (var key in chosenItems) {
+		//output += key + " -> " + chosenItems[key] + "<hr/>";
+		vegData = key + ":" + chosenItems[key];
+		$('<li>').append('<a href="#">' + vegData +  '</a>').appendTo('#shoppingList');
+	}
+	//$("#allVegetablesChosen").html(ouput);
+}
+
+
+function backToList()
+{
+	saveChoice();
+	$.mobile.changePage("#vegPage");
+	$("#spin").val(0);
+}
+
+function saveChoice()
+{
+	vegetableChosen = $("#vegname").text();
+	quantityChosen = $("#spin").val();
+	chosenItems[vegetableChosen] = quantityChosen;	
+}
+
+
+</script>
+
+
+<div data-role="page" id="home">
+  <div data-role="header">
+    <h1>Welcome to Your Shopping List</h1>
+  </div>
+  
+  <div data-role="main" class="ui-content">
+    <p>Click on the list below...</p>
+    <a href="#vegPage">Vegetables list</a><br><br>
+  </div>
+  
+    <div data-role="footer">
+    <h1>Footer Text</h1>
+  </div>
+</div> 
+  
+  <!----------Week 1------------>
+  
+  <div data-role="page" id="vegPage">
+  <div data-role="header">
+    <h1>Welcome to your Week 1 List</h1>
+  </div>
+  <div data-role="main" class="ui-content">
+    <form class="ui-filterable">
+      <input id="myFilter" data-type="search">
+    </form>
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+      <li><a onclick="gotoQuantity(this)">Asparagus</a></li>
+      <li><a onclick="gotoQuantity(this)">Aubergine</a></li>
+      <li><a onclick="gotoQuantity(this)">Broccoli</a></li>
+      <li><a onclick="gotoQuantity(this)">Brussels sprouts</a></li>
+      <li><a onclick="gotoQuantity(this)">Cabbage</a></li>
+      <li><a onclick="gotoQuantity(this)">Carrots</a></li>
+      <li><a onclick="gotoQuantity(this)">Celery</a></li>
+      <li><a onclick="gotoQuantity(this)">Fennel</a></li>
+      <li><a onclick="gotoQuantity(this)">Lettuce</a></li>
+      <li><a onclick="gotoQuantity(this)">Mushrooms</a></li>
+      <li><a onclick="gotoQuantity(this)">Onions</a></li>
+      <li><a onclick="gotoQuantity(this)">Parsley</a></li>
+      <li><a onclick="gotoQuantity(this)">Peppers</a></li>
+      <li><a onclick="gotoQuantity(this)">Tomatoes</a></li>
+      <li><a onclick="gotoQuantity(this)">Zucchini</a></li>
+    </ul>
+    <a href="#home">Home</a>
+  </div>
+  </div>
+
+<!----------Quantity Page---------->
+<div data-role="page" id="quantity">
+  <div data-role="main" class="ui-content">
+  <div id = "vegname"></div>
+  <div class="ui-field-contain">
+    <label for="spin">Input spinner</label>
+    <input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="20" />
+</div>
+<button onclick="backToList()">Go back to List</button>
+<button onclick="showChosenItems()">Display Chosen Items</button>
+
+</div>
+</div>
+
+<!----------Shopping List Page---------->
+
+<div data-role="page" id="finalShoppingList">
+  <div data-role="main" class="ui-content">
+  <div id="allVegetablesChosen">
+  <ul data-role="listview" data-inset="true" id="shoppingList">
+  </ul>
+  </div>
+  </div>
+  </div>
+
+</body>
+</html>
