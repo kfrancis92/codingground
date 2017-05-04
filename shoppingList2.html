@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
+</head>
+<body>
+
+<script>
+
+var chosenItems = {};
+
+function gotoQuantity(obj)
+{
+	$.mobile.changePage("#quantity");
+	vegetablesChosen = $(obj).text();
+	$("#vegname").text(vegetablesChosen);
+}
+
+
+function addNewItemToList()
+{
+		
+		saveNewItem();
+		$("#shoppingList").empty();
+		
+		for (var key in chosenItems) {
+		foodData = key + " x" + chosenItems[key];
+		$('<li>').append('<a href="#">' + foodData +  '</a><a class="deleteMe"></a>').appendTo('#shoppingList');
+	}
+	 $.mobile.changePage("#finalShoppingList");
+	 $("#shoppingList").listview('refresh');
+}
+
+
+
+function showChosenItems()
+{
+	if ($("#spin").val() !="0")  saveChoice();
+	$("#shoppingList").empty();
+	
+	for (var key in chosenItems) {
+		vegData = key + " x" + chosenItems[key];
+		$('<li>').append('<a href="#">' + vegData +  '</a><a class="deleteMe"></a>').appendTo('#shoppingList');
+	}
+	 $.mobile.changePage("#finalShoppingList");
+	 $("#shoppingList").listview('refresh');
+}
+
+
+$('.deleteMe').live('click', function(){
+	$(this).parent().remove();
+	$('#shoppingList').listview('refresh');
+});
+
+
+function saveNewItem()
+{
+	itemAdded = $("#newFoodItem").val();
+	quantityChosen = $("#spinner").val();
+	chosenItems[itemAdded] = quantityChosen;
+	
+}
+
+
+function backToList()
+{
+	saveChoice();
+	$.mobile.changePage("#vegPage");
+	$("#spin").val(0);
+}
+
+function saveChoice()
+{
+	vegetableChosen = $("#vegname").text();
+	quantityChosen = $("#spin").val();
+	chosenItems[vegetableChosen] = quantityChosen;	
+}
+
+
+
+</script>
+
+<div data-role="page" id="home">
+  <div data-role="header">
+    <h1>Welcome to Your Shopping List</h1>
+    </div>
+    <div data-role="navbar">
+    <ul>
+        <li><a href="#finalShoppingList" data-icon="shop">Shopping List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add Item to your Shopping List</a></li>
+      </ul>
+      </div>
+
+  <div data-role="main" class="ui-content">
+    <p>Click on the list below...</p>
+    <a href="#vegPage">Vegetables list</a><br><br>
+  </div>
+  
+    <div data-role="footer">
+    <h1>Footer Text</h1>
+  </div>
+</div> 
+  
+  <!----------Vegetable List Page------------>
+  
+  <div data-role="page" id="vegPage">
+  <div data-role="header">
+    <h1>Welcome to your Vegetable List</h1>
+  </div>
+  
+    <div data-role="navbar">
+    <ul>
+        <li><a href="#home" data-icon="home">Home</a></li>
+        <li><a href="#finalShoppingList" data-icon="shop">Shopping List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add new Item to your List</a></li>
+      </ul>
+      </div>
+  
+  <div data-role="main" class="ui-content">
+    <form class="ui-filterable">
+      <input id="myFilter" data-type="search">
+    </form>
+    <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true" data-split-icon="delete">
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Asparagus</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Aubergine</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Broccoli</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Brussels sprouts</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Cabbage</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Carrots</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Celery</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Fennel</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Lettuce</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Mushrooms</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Onions</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Parsley</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Peppers</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Tomatoes</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Zucchini</a></li>
+    </ul>
+  </div>
+  </div>
+
+<!----------Quantity Page---------->
+<div data-role="page" id="quantity">
+  
+  <div data-role="header">
+    <h1>Choose quantity for your vegetable</h1>
+  </div>
+  
+  <div data-role="navbar">
+    <ul>
+        <li><a href="#home" data-icon="home">Home</a></li>
+        <li><a href="#finalShoppingList" data-icon="shop">Shopping List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add new Item to your List</a></li>
+      </ul>
+      </div>
+  
+  <div data-role="main" class="ui-content">
+  <div id = "vegname"></div>
+  <div class="ui-field-contain">
+    <label for="spin">Choose Quantity: </label>
+    <input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="20" />
+</div>
+<button onclick="backToList()">Go back to List</button>
+<button onclick="showChosenItems()">Save & Display Chosen Items</button>
+
+</div>
+</div>
+
+<!----------Shopping List Page---------->
+
+
+<br>
+<br>
+
+<div id="finalShoppingList">
+  <div data-role="navbar">
+    <ul>
+        <li><a href="#home" data-icon="home">Home</a></li>
+        <li><a href="#addItem" data-icon="shop">Add new Item to your List</a></li>
+      </ul>
+      </div>
+      <br>
+      <h2 align="center"><b><u>Your Saved Shopping List</u></b></h2>
+
+  
+  <div data-role="main" class="ui-content">
+  <div id="allFoodChosen">
+  <ul data-role="listview" data-inset="true" id="shoppingList" data-split-icon="delete" data-split-theme="d">
+  </ul>
+  </div>
+  </div>
+  </div>
+  
+  <!---------Add new item to List-------------->
+  
+  
+  <div data-role="page" id="addItem">
+  <div data-role="header">
+    <h1>Add new item to the List</h1>
+    </div>
+
+  <div data-role="main" class="ui-content">
+  <div id="itemName"></div>
+  <input type="text" id="newFoodItem" placeholder="add new Vegetable item" />
+   	<div class="ui-field-contain">
+    <label for="spin">Choose Quantity: </label>
+    <input type="text" data-role="spinbox" name="spin" id="spinner" value="0" min="0" max="20" />
+	</div>
+
+  <input type="button" value="Add item to list" onclick="addNewItemToList()"/>
+
+</div>
+</div>
+
+</body>
+</html>
