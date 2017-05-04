@@ -51,10 +51,37 @@ function showChosenItems()
 }
 
 
-$('.deleteMe').live('click', function(){
-	$(this).parent().hide();
-	$('#shoppingList').listview('refresh');
+//$("shoppingList").on("click", $("#deleteMe"), function(e) {
+ //   e.preventDefault();
+  //  $(this).parent().remove();
+//});
+
+
+
+//$('.deleteMe').live('click', function(){
+//	$(this).parent().hide();
+//	$('#shoppingList').listview('refresh');
+//});
+
+
+
+$("#finalShoppingList").ready(function(){
+	$('#shoppingList').on('click','li', function(){
+		if($(this).css("text-decoration") == "line-through")
+		{
+			$(this).css("text-decoration", "none");
+		}
+		else {
+			$(this).css("text-decoration", "line-through")
+		}
+	});
+	
+	$('#shoppingList').on('swipe','li',function(){
+		
+		$(this).remove();
+	});
 });
+
 
 
 
@@ -92,7 +119,7 @@ function saveChoice()
     <div data-role="navbar">
     <ul>
         <li><a href="#finalShoppingList" data-icon="shop">Shopping List</a></li>
-        <li><a href="#addItem" data-icon="shop">Add Item to your Shopping List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add new custom item to your List</a></li>
       </ul>
       </div>
 
@@ -156,7 +183,7 @@ function saveChoice()
     <ul>
         <li><a href="#home" data-icon="home">Home</a></li>
         <li><a href="#finalShoppingList" data-icon="shop">Shopping List</a></li>
-        <li><a href="#addItem" data-icon="shop">Add new Item to your List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add custom item</a></li>
       </ul>
       </div>
   
@@ -182,7 +209,7 @@ function saveChoice()
   <div data-role="navbar">
     <ul>
         <li><a href="#home" data-icon="home">Home</a></li>
-        <li><a href="#addItem" data-icon="shop">Add new Item to your List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add custom item to your List</a></li>
       </ul>
       </div>
       <br>
@@ -202,12 +229,12 @@ function saveChoice()
   
   <div data-role="page" id="addItem">
   <div data-role="header">
-    <h1>Add new item to the List</h1>
+    <h1>Add new Custom item to the List</h1>
     </div>
 
   <div data-role="main" class="ui-content">
   <div id="itemName"></div>
-  <input type="text" id="newFoodItem" placeholder="add new Vegetable item" />
+  <input type="text" id="newFoodItem" placeholder="add new Custom item" />
    	<div class="ui-field-contain">
     <label for="spin">Choose Quantity: </label>
     <input type="text" data-role="spinbox" name="spin" id="spinner" value="0" min="0" max="20" />
