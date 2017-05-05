@@ -6,6 +6,31 @@
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
+<style>
+
+	h2
+	{
+		font-size: 14px;
+	}
+	
+	h1
+	{
+		font-size: 12px;
+	}
+	
+	p
+	{
+		text-align: center;	
+	}
+	
+	footer
+	{
+		position: fixed;	
+	}
+
+</style>
+
+
 </head>
 <body>
 
@@ -25,7 +50,7 @@ function gotoQuantity(obj)
 
 function addNewItemToList()
 {
-		
+		if ($("#spinner").val() !="0")
 		saveNewItem();
 		$("#shoppingList").empty();
 		
@@ -39,7 +64,7 @@ function addNewItemToList()
 
 function addNewItemToWeek()
 {
-		
+		if ($("#spinner").val() !="0")
 		saveNewItemWeek();
 		$("#weekList").empty();
 		
@@ -53,7 +78,7 @@ function addNewItemToWeek()
 
 function addNewItemToMonth()
 {
-		
+		if ($("#spinner").val() !="0")
 		saveNewItemMonth();
 		$("#monthList").empty();
 		
@@ -166,6 +191,7 @@ function saveNewItem()
 	itemAdded = $("#newFoodItem").val();
 	quantityChosen = $("#spinner").val();
 	chosenItems[itemAdded] = quantityChosen;
+		$("#spinner").val(0);
 	
 }
 
@@ -174,6 +200,7 @@ function saveNewItemWeek()
 	itemAdded = $("#newFoodItem").val();
 	quantityChosen = $("#spinner").val();
 	chosenWeekItems[itemAdded] = quantityChosen;
+		$("#spinner").val(0);
 	
 }
 
@@ -182,6 +209,7 @@ function saveNewItemMonth()
 	itemAdded = $("#newFoodItem").val();
 	quantityChosen = $("#spinner").val();
 	chosenMonthItems[itemAdded] = quantityChosen;
+	$("#spinner").val(0);
 	
 }
 
@@ -197,7 +225,8 @@ function saveChoice()
 {
 	vegetableChosen = $("#vegname").text();
 	quantityChosen = $("#spin").val();
-	chosenItems[vegetableChosen] = quantityChosen;	
+	chosenItems[vegetableChosen] = quantityChosen;
+	$("#spin").val(0);	
 }
 
 
@@ -205,14 +234,16 @@ function saveWeekChoice()
 {
 	vegetableChosen = $("#vegname").text();
 	quantityChosen = $("#spin").val();
-	chosenWeekItems[vegetableChosen] = quantityChosen;	
+	chosenWeekItems[vegetableChosen] = quantityChosen;
+	$("#spin").val(0);	
 }
 
 function saveMonthChoice()
 {
 	vegetableChosen = $("#vegname").text();
 	quantityChosen = $("#spin").val();
-	chosenMonthItems[vegetableChosen] = quantityChosen;	
+	chosenMonthItems[vegetableChosen] = quantityChosen;
+	$("#spin").val(0);	
 }
 
 
@@ -220,18 +251,23 @@ function saveMonthChoice()
 
 <div data-role="page" id="home">
   <div data-role="header">
-    <h2>Welcome to Your Shopping List</h2>
+    <h1>Shopping List App</h1>
     </div>
     <div data-role="navbar">
     <ul>
-        <li><a href="#" data-icon="info">Help</a></li>
-        <li><a href="#vegPage" data-icon="bars">Access pre-defined Food List</a></li>
-        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
-        <li><a href="#weekMonthList" data-icon="bars">Access Weekly & Monthly Lists</a></li>
+        <li><a href="#vegPage" data-icon="bars">Grocery List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add new Item</a></li>
+        <li><a href="#weekMonthList" data-icon="bars">Weekly/Monthly Lists</a></li>
       </ul>
       </div>
+      
+       <a href="#popupBasic" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-info" data-transition="pop">Help</a>
+	<div data-role="popup" id="popupBasic">
+	<p>Click on the Item to cross out (check function).<br>Swipe right to delete.</p>
+	</div>
+	<br>      
 
-      <h2 align="center"><b><u>Your Current Shopping List</u></b></h2>
+  <h2 align="center"><b><u>Your Current Shopping List</u></b></h2>
 
   <div data-role="main" class="ui-content">
   <div id="allFoodChosen">
@@ -239,23 +275,30 @@ function saveMonthChoice()
   </ul>
   </div>
   </div>
+  <div data-role="footer">
+  <h3>13038402</h3>
+  </div>
 </div> 
   
-  <!----------Food List Page------------>
+  <!----------Grocery List Page------------>
   
   <div data-role="page" id="vegPage">
   <div data-role="header">
-    <h1>Pre-defined Food List</h1>
+    <h1>Grocery List</h1>
   </div>
   
     <div data-role="navbar">
     <ul>
-        <li><a href="#" data-icon="info">Help</a></li>
-        <li><a href="#home" data-icon="bars">Access Current Shopping List</a></li>
-        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
-        <li><a href="#weekMonthList" data-icon="bars">Access Weekly & Monthly Lists</a></li>
+        <li><a href="#home" data-icon="bars">Current Shopping List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add new Item</a></li>
+        <li><a href="#weekMonthList" data-icon="bars">Weekly & Monthly Lists</a></li>
       </ul>
       </div>
+       <a href="#popupBasics" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-info" data-transition="pop">Help</a>
+	<div data-role="popup" id="popupBasics">
+	<p>Search and click an item from the List.<br>You will be directed to the Quantity Page.</p>
+	</div>
+	<br>      
   
   <div data-role="main" class="ui-content">
     <form class="ui-filterable">
@@ -279,19 +322,22 @@ function saveMonthChoice()
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Zucchini</a></li>
     </ul>
   </div>
+    <div data-role="footer">
+  <h3>13038402</h3>
+  </div>
   </div>
 
 <!----------Quantity Page---------->
 <div data-role="page" id="quantity">
   
   <div data-role="header">
-    <h1>Choose quantity for your vegetable</h1>
+    <h1>Choose Quantity</h1>
   </div>
   
   <div data-role="navbar">
     <ul>
-        <li><a href="#home" data-icon="shop">Access Current Shopping List</a></li>
-        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
+        <li><a href="#home" data-icon="shop">Current Shopping List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add new Item</a></li>
       </ul>
       </div>
   
@@ -302,11 +348,14 @@ function saveMonthChoice()
     <input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="20" />
 </div>
 <button onclick="backToList()">Go back to List</button>
-<button onclick="showChosenItems()">Save at Current List</button>
-<button onclick="showWeeklyItems()">Save at Weekly List</button>
-<button onclick="showMonthlyItems()">Save at Monthly List</button>
+<button onclick="showChosenItems()">Save to Current List</button>
+<button onclick="showWeeklyItems()">Save to Weekly List</button>
+<button onclick="showMonthlyItems()">Save to Monthly List</button>
 
 </div>
+  <div data-role="footer">
+  <h3>13038402</h3>
+  </div>
 </div>
 
 <!----------Shopping List Page---------->
@@ -319,8 +368,8 @@ function saveMonthChoice()
   <div data-role="navbar">
     <ul>
         <li><a href="#home" data-icon="home">Home</a></li>
-        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
-        <li><a href="#vegPage" data-icon="shop">Access pre-defined Food List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add Item</a></li>
+        <li><a href="#vegPage" data-icon="shop">Grocery List</a></li>
       </ul>
       </div>
       <br>
@@ -340,46 +389,54 @@ function saveMonthChoice()
   
   <div data-role="page" id="addItem">
   <div data-role="header">
-    <h1>Add new Custom item to the List</h1>
+    <h1>Add new Item</h1>
     </div>
 
  <div data-role="navbar">
     <ul>
         <li><a href="#home" data-icon="bars">Current Shopping List</a></li>
-        <li><a href="#weekMonthList" data-icon="cloud">Access Weekly & Monthly Lists</a></li>
-        <li><a href="#vegPage" data-icon="shop">Access pre-defined Food List</a></li>
+        <li><a href="#vegPage" data-icon="shop">Grocery List</a></li>
+        <li><a href="#weekMonthList" data-icon="cloud">Weekly & Monthly Lists</a></li>
       </ul>
       </div>
 
   <div data-role="main" class="ui-content">
   <div id="itemName"></div>
-  <input type="text" id="newFoodItem" placeholder="add new Custom item" />
+  <input type="text" id="newFoodItem" placeholder="add new Custom item"/>
    	<div class="ui-field-contain">
     <label for="spin">Choose Quantity: </label>
     <input type="text" data-role="spinbox" name="spin" id="spinner" value="0" min="0" max="20" />
 	</div>
 
-  <input type="button" value="Save at Current List" onclick="addNewItemToList()"/>
-  <input type="button" value="Save at Weekly List" onclick="addNewItemToWeek()"/>
-  <input type="button" value="Save at Monthly List" onclick="addNewItemToMonth()"/>
+  <input type="button" value="Save to Current List" onclick="addNewItemToList()"/>
+  <input type="button" value="Save to Weekly List" onclick="addNewItemToWeek()"/>
+  <input type="button" value="Save to Monthly List" onclick="addNewItemToMonth()"/>
 
 </div>
+  <div data-role="footer">
+  <h3>13038402</h3>
+  </div>
 </div>
 
   <!---------Weekly & Monthly List-------------->
 
 <div data-role="page" id="weekMonthList">
   <div data-role="header">
-    <h2>Your Weekly & Monthly List</h2>
+    <h1>Weekly & Monthly List</h1>
     </div>
     <div data-role="navbar">
     <ul>
-        <li><a href="#vegPage" data-icon="shop">Access pre-defined Food List</a></li>
-        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
-        <li><a href="#home" data-icon="shop">Access Current Shopping List</a></li>
-        <li><a href="#" data-icon="bars">Access Weekly & Monthly Lists</a></li>
+        <li><a href="#vegPage" data-icon="bars">Grocery List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add new Item</a></li>
+        <li><a href="#home" data-icon="bars">Current Shopping List</a></li>
       </ul>
       </div>
+      
+ <a href="#popupBasicss" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-mini" data-transition="pop">Help</a>
+<div data-role="popup" id="popupBasicss">
+<p>Click on the Item to cross out (check function).<br>Swipe right to delete.</p>
+</div>
+<br>
 
       <h2 align="center"><b><u>Your Weekly Shopping List</u></b></h2>
 
@@ -398,7 +455,9 @@ function saveMonthChoice()
   </ul>
   </div>
   </div>
-  
+    <div data-role="footer">
+  <h3>13038402</h3>
+  </div>
 </div> 
 
 </body>
