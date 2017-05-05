@@ -12,6 +12,8 @@
 <script>
 
 var chosenItems = {};
+var chosenWeekItems = {};
+var chosenMonthItems = {};
 
 function gotoQuantity(obj)
 {
@@ -29,11 +31,40 @@ function addNewItemToList()
 		
 		for (var key in chosenItems) {
 		foodData = key + " x" + chosenItems[key];
-		$('<li>').append('<a href="#">' + foodData +  '</a><a class="deleteMe"></a>').appendTo('#shoppingList');
+		$('<li>').append('<a href="#">' + foodData +  '</a>').appendTo('#shoppingList');
 	}
-	 $.mobile.changePage("#finalShoppingList");
+	 $.mobile.changePage("#home");
 	 $("#shoppingList").listview('refresh');
 }
+
+function addNewItemToWeek()
+{
+		
+		saveNewItemWeek();
+		$("#weekList").empty();
+		
+		for (var key in chosenWeekItems) {
+		customWeekData = key + " x" + chosenWeekItems[key];
+		$('<li>').append('<a href="#">' + customWeekData +  '</a>').appendTo('#weekList');
+	}
+	 $.mobile.changePage("#weekMonthList");
+	 $("#weekList").listview('refresh');
+}
+
+function addNewItemToMonth()
+{
+		
+		saveNewItemMonth();
+		$("#monthList").empty();
+		
+		for (var key in chosenMonthItems) {
+		customMonthData = key + " x" + chosenMonthItems[key];
+		$('<li>').append('<a href="#">' + customMonthData +  '</a>').appendTo('#monthList');
+	}
+	 $.mobile.changePage("#weekMonthList");
+	 $("#monthList").listview('refresh');
+}
+
 
 
 
@@ -44,24 +75,37 @@ function showChosenItems()
 	
 	for (var key in chosenItems) {
 		vegData = key + " x" + chosenItems[key];
-		$('<li>').append('<a href="#">' + vegData +  '</a><a class="deleteMe"></a>').appendTo('#shoppingList');
+		$('<li>').append('<a href="#">' + vegData +  '</a>').appendTo('#shoppingList');
 	}
-	 $.mobile.changePage("#finalShoppingList");
+	 $.mobile.changePage("#home");
 	 $("#shoppingList").listview('refresh');
 }
 
+function showWeeklyItems()
+{
+	if ($("#spin").val() !="0")  saveWeekChoice();
+	$("#weekList").empty();
+	
+	for (var key in chosenWeekItems) {
+		weekData = key + " x" + chosenWeekItems[key];
+		$('<li>').append('<a href="#">' + weekData +  '</a>').appendTo('#weekList');
+	}
+	 $.mobile.changePage("#weekMonthList");
+	 $("#weekList").listview('refresh');
+}
 
-//$("shoppingList").on("click", $("#deleteMe"), function(e) {
- //   e.preventDefault();
-  //  $(this).parent().remove();
-//});
-
-
-
-//$('.deleteMe').live('click', function(){
-//	$(this).parent().hide();
-//	$('#shoppingList').listview('refresh');
-//});
+function showMonthlyItems()
+{
+	if ($("#spin").val() !="0")  saveMonthChoice();
+	$("#monthList").empty();
+	
+	for (var key in chosenMonthItems) {
+		monthData = key + " x" + chosenMonthItems[key];
+		$('<li>').append('<a href="#">' + monthData +  '</a>').appendTo('#monthList');
+	}
+	 $.mobile.changePage("#weekMonthList");
+	 $("#monthList").listview('refresh');
+}
 
 
 
@@ -82,7 +126,39 @@ $("#finalShoppingList").ready(function(){
 	});
 });
 
+$("#weekMonthList").ready(function(){
+	$('#weekList').on('click','li', function(){
+		if($(this).css("text-decoration") == "line-through")
+		{
+			$(this).css("text-decoration", "none");
+		}
+		else {
+			$(this).css("text-decoration", "line-through")
+		}
+	});
+	
+	$('#weekList').on('swipe','li',function(){
+		
+		$(this).remove();
+	});
+});
 
+$("#weekMonthList").ready(function(){
+	$('#monthList').on('click','li', function(){
+		if($(this).css("text-decoration") == "line-through")
+		{
+			$(this).css("text-decoration", "none");
+		}
+		else {
+			$(this).css("text-decoration", "line-through")
+		}
+	});
+	
+	$('#monthList').on('swipe','li',function(){
+		
+		$(this).remove();
+	});
+});
 
 
 function saveNewItem()
@@ -90,6 +166,22 @@ function saveNewItem()
 	itemAdded = $("#newFoodItem").val();
 	quantityChosen = $("#spinner").val();
 	chosenItems[itemAdded] = quantityChosen;
+	
+}
+
+function saveNewItemWeek()
+{
+	itemAdded = $("#newFoodItem").val();
+	quantityChosen = $("#spinner").val();
+	chosenWeekItems[itemAdded] = quantityChosen;
+	
+}
+
+function saveNewItemMonth()
+{
+	itemAdded = $("#newFoodItem").val();
+	quantityChosen = $("#spinner").val();
+	chosenMonthItems[itemAdded] = quantityChosen;
 	
 }
 
@@ -109,42 +201,59 @@ function saveChoice()
 }
 
 
+function saveWeekChoice()
+{
+	vegetableChosen = $("#vegname").text();
+	quantityChosen = $("#spin").val();
+	chosenWeekItems[vegetableChosen] = quantityChosen;	
+}
+
+function saveMonthChoice()
+{
+	vegetableChosen = $("#vegname").text();
+	quantityChosen = $("#spin").val();
+	chosenMonthItems[vegetableChosen] = quantityChosen;	
+}
+
 
 </script>
 
 <div data-role="page" id="home">
   <div data-role="header">
-    <h1>Welcome to Your Shopping List</h1>
+    <h2>Welcome to Your Shopping List</h2>
     </div>
     <div data-role="navbar">
     <ul>
-        <li><a href="#finalShoppingList" data-icon="shop">Shopping List</a></li>
-        <li><a href="#addItem" data-icon="shop">Add new custom item to your List</a></li>
+        <li><a href="#" data-icon="info">Help</a></li>
+        <li><a href="#vegPage" data-icon="bars">Access pre-defined Food List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
+        <li><a href="#weekMonthList" data-icon="bars">Access Weekly & Monthly Lists</a></li>
       </ul>
       </div>
 
+      <h2 align="center"><b><u>Your Current Shopping List</u></b></h2>
+
   <div data-role="main" class="ui-content">
-    <p>Click on the list below...</p>
-    <a href="#vegPage">Vegetables list</a><br><br>
+  <div id="allFoodChosen">
+  <ul data-role="listview" data-inset="true" id="shoppingList" data-split-icon="delete" data-split-theme="d">
+  </ul>
   </div>
-  
-    <div data-role="footer">
-    <h1>Footer Text</h1>
   </div>
 </div> 
   
-  <!----------Vegetable List Page------------>
+  <!----------Food List Page------------>
   
   <div data-role="page" id="vegPage">
   <div data-role="header">
-    <h1>Welcome to your Vegetable List</h1>
+    <h1>Pre-defined Food List</h1>
   </div>
   
     <div data-role="navbar">
     <ul>
-        <li><a href="#home" data-icon="home">Home</a></li>
-        <li><a href="#finalShoppingList" data-icon="shop">Shopping List</a></li>
-        <li><a href="#addItem" data-icon="shop">Add new Item to your List</a></li>
+        <li><a href="#" data-icon="info">Help</a></li>
+        <li><a href="#home" data-icon="bars">Access Current Shopping List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
+        <li><a href="#weekMonthList" data-icon="bars">Access Weekly & Monthly Lists</a></li>
       </ul>
       </div>
   
@@ -181,9 +290,8 @@ function saveChoice()
   
   <div data-role="navbar">
     <ul>
-        <li><a href="#home" data-icon="home">Home</a></li>
-        <li><a href="#finalShoppingList" data-icon="shop">Shopping List</a></li>
-        <li><a href="#addItem" data-icon="shop">Add custom item</a></li>
+        <li><a href="#home" data-icon="shop">Access Current Shopping List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
       </ul>
       </div>
   
@@ -194,7 +302,9 @@ function saveChoice()
     <input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="20" />
 </div>
 <button onclick="backToList()">Go back to List</button>
-<button onclick="showChosenItems()">Save & Display Chosen Items</button>
+<button onclick="showChosenItems()">Save at Current List</button>
+<button onclick="showWeeklyItems()">Save at Weekly List</button>
+<button onclick="showMonthlyItems()">Save at Monthly List</button>
 
 </div>
 </div>
@@ -209,7 +319,8 @@ function saveChoice()
   <div data-role="navbar">
     <ul>
         <li><a href="#home" data-icon="home">Home</a></li>
-        <li><a href="#addItem" data-icon="shop">Add custom item to your List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
+        <li><a href="#vegPage" data-icon="shop">Access pre-defined Food List</a></li>
       </ul>
       </div>
       <br>
@@ -217,12 +328,12 @@ function saveChoice()
 
   
   <div data-role="main" class="ui-content">
-  <div id="allFoodChosen">
-  <ul data-role="listview" data-inset="true" id="shoppingList" data-split-icon="delete" data-split-theme="d">
-  </ul>
+  <!--<div id="allFoodChosen"> --->
+ <!-- <ul data-role="listview" data-inset="true" id="shoppingList" data-split-icon="delete" data-split-theme="d"> --->
+ <!-- </ul> --->
   </div>
   </div>
-  </div>
+ <!-- </div> --->
   
   <!---------Add new item to List-------------->
   
@@ -232,6 +343,14 @@ function saveChoice()
     <h1>Add new Custom item to the List</h1>
     </div>
 
+ <div data-role="navbar">
+    <ul>
+        <li><a href="#home" data-icon="bars">Current Shopping List</a></li>
+        <li><a href="#weekMonthList" data-icon="cloud">Access Weekly & Monthly Lists</a></li>
+        <li><a href="#vegPage" data-icon="shop">Access pre-defined Food List</a></li>
+      </ul>
+      </div>
+
   <div data-role="main" class="ui-content">
   <div id="itemName"></div>
   <input type="text" id="newFoodItem" placeholder="add new Custom item" />
@@ -240,10 +359,47 @@ function saveChoice()
     <input type="text" data-role="spinbox" name="spin" id="spinner" value="0" min="0" max="20" />
 	</div>
 
-  <input type="button" value="Add item to list" onclick="addNewItemToList()"/>
+  <input type="button" value="Save at Current List" onclick="addNewItemToList()"/>
+  <input type="button" value="Save at Weekly List" onclick="addNewItemToWeek()"/>
+  <input type="button" value="Save at Monthly List" onclick="addNewItemToMonth()"/>
 
 </div>
 </div>
+
+  <!---------Weekly & Monthly List-------------->
+
+<div data-role="page" id="weekMonthList">
+  <div data-role="header">
+    <h2>Your Weekly & Monthly List</h2>
+    </div>
+    <div data-role="navbar">
+    <ul>
+        <li><a href="#vegPage" data-icon="shop">Access pre-defined Food List</a></li>
+        <li><a href="#addItem" data-icon="shop">Add custom Item to List</a></li>
+        <li><a href="#home" data-icon="shop">Access Current Shopping List</a></li>
+        <li><a href="#" data-icon="bars">Access Weekly & Monthly Lists</a></li>
+      </ul>
+      </div>
+
+      <h2 align="center"><b><u>Your Weekly Shopping List</u></b></h2>
+
+  <div data-role="main" class="ui-content">
+  <div id="futureWeekList">
+  <ul data-role="listview" data-inset="true" id="weekList" data-split-icon="delete" data-split-theme="d">
+  </ul>
+  </div>
+  </div>
+  
+  <h2 align="center"><b><u>Your Monthly Shopping List</u></b></h2>
+
+  <div data-role="main" class="ui-content">
+  <div id="futureMonthList">
+  <ul data-role="listview" data-inset="true" id="monthList" data-split-icon="delete" data-split-theme="d">
+  </ul>
+  </div>
+  </div>
+  
+</div> 
 
 </body>
 </html>
