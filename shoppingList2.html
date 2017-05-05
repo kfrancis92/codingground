@@ -13,19 +13,29 @@
 		font-size: 14px;
 	}
 	
-	h1
-	{
-		font-size: 12px;
-	}
-	
 	p
 	{
 		text-align: center;	
 	}
 	
-	footer
+	body
 	{
-		position: fixed;	
+		background:	
+	}
+	
+	.ui-page{
+	
+	background: #F6E3CE;
+	}
+	
+	.ui-page .ui-header {
+	
+	background: #F79F81 ;	
+	}
+	
+	.ui-page .ui-footer {
+	
+	background: #F79F81 ;	
 	}
 
 </style>
@@ -39,6 +49,16 @@
 var chosenItems = {};
 var chosenWeekItems = {};
 var chosenMonthItems = {};
+
+//$( document ).ready(function() {
+//	var local = localStorage.getItem("wList");
+//	if(local!=null) chosenWeekItems = JSON.parse(local);
+//});
+
+//$( document ).ready(function() {
+//	var local = localStorage.getItem("mList");
+//	if(local!=null) chosenMonthItems = JSON.parse(local);
+//});
 
 function gotoQuantity(obj)
 {
@@ -132,6 +152,12 @@ function showMonthlyItems()
 	 $("#monthList").listview('refresh');
 }
 
+function clearAll()
+{
+	chosenItems = {}
+	$('#shoppingList').empty();
+	localStorage.clear()
+}
 
 
 $("#finalShoppingList").ready(function(){
@@ -192,7 +218,6 @@ function saveNewItem()
 	quantityChosen = $("#spinner").val();
 	chosenItems[itemAdded] = quantityChosen;
 		$("#spinner").val(0);
-	
 }
 
 function saveNewItemWeek()
@@ -201,7 +226,7 @@ function saveNewItemWeek()
 	quantityChosen = $("#spinner").val();
 	chosenWeekItems[itemAdded] = quantityChosen;
 		$("#spinner").val(0);
-	
+		localStorage.setItem("wList",JSON.stringify(chosenWeekItems));
 }
 
 function saveNewItemMonth()
@@ -210,6 +235,7 @@ function saveNewItemMonth()
 	quantityChosen = $("#spinner").val();
 	chosenMonthItems[itemAdded] = quantityChosen;
 	$("#spinner").val(0);
+	localStorage.setItem("mList",JSON.stringify(chosenMonthItems));
 	
 }
 
@@ -226,7 +252,7 @@ function saveChoice()
 	vegetableChosen = $("#vegname").text();
 	quantityChosen = $("#spin").val();
 	chosenItems[vegetableChosen] = quantityChosen;
-	$("#spin").val(0);	
+	$("#spin").val(0);
 }
 
 
@@ -235,7 +261,8 @@ function saveWeekChoice()
 	vegetableChosen = $("#vegname").text();
 	quantityChosen = $("#spin").val();
 	chosenWeekItems[vegetableChosen] = quantityChosen;
-	$("#spin").val(0);	
+	$("#spin").val(0);
+	localStorage.setItem("wList",JSON.stringify(chosenWeekItems));
 }
 
 function saveMonthChoice()
@@ -243,7 +270,8 @@ function saveMonthChoice()
 	vegetableChosen = $("#vegname").text();
 	quantityChosen = $("#spin").val();
 	chosenMonthItems[vegetableChosen] = quantityChosen;
-	$("#spin").val(0);	
+	$("#spin").val(0);
+	localStorage.setItem("mList",JSON.stringify(chosenMonthItems));
 }
 
 
@@ -274,6 +302,7 @@ function saveMonthChoice()
   <ul data-role="listview" data-inset="true" id="shoppingList" data-split-icon="delete" data-split-theme="d">
   </ul>
   </div>
+  <button onclick="clearAll()">Clear Your Shopping List</button>
   </div>
   <div data-role="footer">
   <h3>13038402</h3>
@@ -306,19 +335,34 @@ function saveMonthChoice()
     </form>
     <ul data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true" data-split-icon="delete">
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Asparagus</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Apple</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Aubergine</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Banana</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Bread</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Broccoli</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Brussels sprouts</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Butter</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Cabbage</a></li>
-      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Carrots</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Carrot</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Celery</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Cheese</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Chicken</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Eggs</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Fennel</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Fish</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Grapes</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Lettuce</a></li>
-      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Mushrooms</a></li>
-      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Onions</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Milk</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Mushroom</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Onion</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Orange</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Parsley</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Peppers</a></li>
-      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Tomatoes</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Pizza</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Sugar</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Tomato</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Tuna</a></li>
+      <li data-icon= "plus"><a onclick="gotoQuantity(this)">Water</a></li>
       <li data-icon= "plus"><a onclick="gotoQuantity(this)">Zucchini</a></li>
     </ul>
   </div>
@@ -338,6 +382,7 @@ function saveMonthChoice()
     <ul>
         <li><a href="#home" data-icon="shop">Current Shopping List</a></li>
         <li><a href="#addItem" data-icon="shop">Add new Item</a></li>
+        <li><a href="#weekMonthList" data-icon="cloud">Weekly & Monthly Lists</a></li>
       </ul>
       </div>
   
@@ -396,7 +441,7 @@ function saveMonthChoice()
     <ul>
         <li><a href="#home" data-icon="bars">Current Shopping List</a></li>
         <li><a href="#vegPage" data-icon="shop">Grocery List</a></li>
-        <li><a href="#weekMonthList" data-icon="cloud">Weekly & Monthly Lists</a></li>
+        <li><a href="#weekMonthList" data-icon="bars">Weekly & Monthly Lists</a></li>
       </ul>
       </div>
 
@@ -426,15 +471,17 @@ function saveMonthChoice()
     </div>
     <div data-role="navbar">
     <ul>
+        <li><a href="#home" data-icon="bars">Current Shopping List</a></li>
         <li><a href="#vegPage" data-icon="bars">Grocery List</a></li>
         <li><a href="#addItem" data-icon="shop">Add new Item</a></li>
-        <li><a href="#home" data-icon="bars">Current Shopping List</a></li>
       </ul>
       </div>
       
  <a href="#popupBasicss" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-mini" data-transition="pop">Help</a>
 <div data-role="popup" id="popupBasicss">
-<p>Click on the Item to cross out (check function).<br>Swipe right to delete.</p>
+<p>Click on the Item to cross out.
+<br>Double click to uncross (check function).
+<br>Swipe right to delete.</p>
 </div>
 <br>
 
